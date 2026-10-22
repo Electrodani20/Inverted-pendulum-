@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f6f5f0">
+  <title>Inverted Pendulum — Control Lab</title>
+  <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+  <header class="site-header">
+    <a class="brand" href="/" aria-label="Control Lab home"><span class="brand-symbol">◒</span> CONTROL<span class="brand-light">LAB</span><span class="brand-period">®</span></a>
+    <div class="header-middle"><span class="tiny-square"></span> AN INTERACTIVE PHYSICS PLAYGROUND</div>
+    <a class="header-link" href="#how-it-works">Behind the balance <span>↗</span></a>
+  </header>
+  <main>
+    <section class="intro">
+      <div><div class="eyebrow"><span>EXPERIMENT 001</span><span class="eyebrow-line"></span> DYNAMICS & CONTROL</div><h1>Inverted pendulum<span>.</span></h1><p>A delicate balance. A little disturbance. A controller that brings it back.</p></div>
+      <div class="intro-note"><span class="live-dot"></span> REAL-TIME SIMULATION<span class="intro-note-sub">Nonlinear physics · PID control</span></div>
+    </section>
+    <div class="workspace">
+      <section class="simulation-panel panel" aria-label="Interactive pendulum simulation">
+        <div class="panel-heading"><div class="panel-label"><span class="crosshair">⊕</span> THE BALANCING ACT</div><span class="status" id="status"><span></span> Balanced</span></div>
+        <div class="stage schematic-stage"><canvas id="simulation" aria-label="Animated cart balancing an inverted pendulum"></canvas><div class="stage-top"><span>θ = <strong id="angle-overlay">0.00°</strong></span><span id="clock">00:00.00</span></div><div class="stage-bottom"><span><i class="legend orange"></i> CART + PENDULUM <i class="legend dashed"></i> TARGET</span><span>m · M · l · θ · F</span></div><div class="fallen-overlay" id="fallen-overlay" hidden><div class="fallen-card"><span>THE BALANCE WAS LOST</span><h2>Every system has a limit.</h2><p>Reduce the disturbance or adjust your PID gains, then try again.</p><button class="primary" id="try-again">Reset experiment ↺</button></div></div></div>
+        <div class="transport"><div class="transport-left"><button class="play-button" id="play" aria-label="Pause simulation">Ⅱ</button><button class="reset-button" id="reset" title="Reset simulation (R)">↺ <span>Reset</span></button><span class="transport-divider"></span><span class="speed-label">SIMULATION SPEED</span><div class="segmented" aria-label="Simulation speed"><button data-speed="0.5">0.5×</button><button data-speed="1" class="selected">1×</button><button data-speed="2">2×</button></div></div><span class="keyboard-hint"><kbd>space</kbd> to pause</span></div>
+        <div class="metrics"><div><span class="metric-label">PENDULUM ANGLE</span><strong id="angle">0.00<span>°</span></strong><small>from the vertical</small></div><div><span class="metric-label">CART POSITION</span><strong id="position">0.00 <span>m</span></strong><small>relative to center</small></div><div><span class="metric-label">CONTROL FORCE</span><strong id="force">0.00 <span>N</span></strong><small>applied by the PID</small></div><div><span class="metric-label">ANGULAR VELOCITY</span><strong id="velocity">0.00 <span>°/s</span></strong><small>pendulum rotation</small></div></div>
+      </section>
+      <aside class="controls">
+        <section class="panel disturbance-panel"><div class="panel-label"><span class="wind-icon">≋</span> MAKE SOME WAVES</div><div class="control-title-row"><h2>Disturbance</h2><span class="small-tag">WIND FORCE</span></div><p>Put the balance to the test. Turn up the wind and watch the controller respond.</p><div class="disturbance-reading"><strong id="disturbance-value">0</strong><span>N</span><span class="disturbance-level" id="disturbance-level">All calm</span></div><input id="disturbance" type="range" min="0" max="30" step="1" value="0" aria-label="Disturbance amplitude in newtons"><div class="range-labels"><span>0 N</span><span>30 N</span></div><div class="arrow-controls"><button id="decrease" aria-label="Decrease disturbance"><span>↓</span> Less wind</button><button id="increase" aria-label="Increase disturbance"><span>↑</span> More wind</button></div><div class="control-tip"><span>↳</span> Use your <kbd>↑</kbd> <kbd>↓</kbd> arrow keys. Try holding them.</div></section>
+        <section class="panel pid-panel"><div class="control-title-row"><h2>In good hands.</h2><label class="switch"><input type="checkbox" id="pid-enabled" checked aria-label="Enable PID controller"><span></span></label></div><div class="pid-description"><span class="live-dot" id="pid-dot"></span><span id="pid-state">PID controller active</span></div><div class="gain-row"><label for="kp"><span class="gain-letter">P</span> Proportional</label><input type="number" id="kp" min="0" max="300" step="1" value="100" aria-label="Proportional gain"></div><div class="gain-row"><label for="ki"><span class="gain-letter">I</span> Integral</label><input type="number" id="ki" min="0" max="100" step="1" value="8" aria-label="Integral gain"></div><div class="gain-row"><label for="kd"><span class="gain-letter">D</span> Derivative</label><input type="number" id="kd" min="0" max="100" step="1" value="22" aria-label="Derivative gain"></div><div class="motion-row"><label for="motion">Side-to-side motion</label><label class="switch"><input type="checkbox" id="motion" checked><span></span></label></div><button class="restore-button" id="restore">↺ Restore default gains</button></section>
+      </aside>
+    </div>
+    <section class="telemetry"><div class="section-heading"><div class="panel-label"><span class="crosshair">⌁</span> THE RESPONSE, IN REAL TIME</div><span>LAST 20 SECONDS <span class="live-dot"></span></span></div><div class="charts"><article class="panel chart-card"><div class="chart-heading"><h3><i class="legend orange"></i> Pendulum angle</h3><span>degrees</span></div><canvas id="angle-chart" aria-label="Pendulum angle over the last 20 seconds"></canvas><div class="chart-footer"><span>−20 s</span><span>NOW</span></div></article><article class="panel chart-card"><div class="chart-heading"><h3><i class="legend dark"></i> Cart position</h3><span>meters <i class="legend dashed"></i> target</span></div><canvas id="position-chart" aria-label="Cart and target position over the last 20 seconds"></canvas><div class="chart-footer"><span>−20 s</span><span>NOW</span></div></article><article class="panel chart-card"><div class="chart-heading"><h3><i class="legend green"></i> Control force</h3><span>newtons</span></div><canvas id="force-chart" aria-label="PID control force over the last 20 seconds"></canvas><div class="chart-footer"><span>−20 s</span><span>NOW</span></div></article></div></section>
+    <section class="explainer" id="how-it-works"><span class="explain-icon">i</span><div><h3>Unstable by nature. Balanced by feedback.</h3><p>The cart moves beneath the pendulum to keep it upright. A position loop follows the moving target; an angle PID continually corrects the lean. Wind adds a varying external force to the cart. Turn the controller off to see why feedback matters.</p></div><div class="physics-specs"><span>CART <b>1.0 kg</b></span><span>BOB <b>0.22 kg</b></span><span>ROD <b>1.0 m</b></span><span>GRAVITY <b>9.81 m/s²</b></span></div></section>
+    <footer><span>CONTROL LAB <span class="footer-slash">/</span> A small experiment in staying upright.</span><span>BUILT TO BE PLAYED WITH. <span>↗</span></span></footer>
+  </main>
+  <script type="module" src="/app.js"></script>
+</body>
+</html>

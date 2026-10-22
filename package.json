@@ -1,0 +1,11 @@
+{
+  "name": "pendulum-control-lab",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "start": "node server.mjs",
+    "build": "node build.mjs",
+    "test": "node --test tests/physics.test.mjs"
+  }
+}
