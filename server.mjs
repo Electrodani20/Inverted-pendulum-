@@ -11,7 +11,7 @@ const server = createServer(async (req, res) => {
     const file = resolve(root, '.' + (path === '/' ? '/index.html' : path));
     if (!file.startsWith(root + sep) && !file.startsWith(root)) throw new Error('Invalid path');
     // Serve only public application assets.
-    if (!['index.html', 'style.css', 'app.js', 'physics.js'].includes(file.slice(root.length))) {
+    if (!['index.html', 'style.css', 'app.js', 'physics.js', 'motion.js'].includes(file.slice(root.length))) {
       res.writeHead(404).end('Not found'); return;
     }
     const data = await readFile(file);

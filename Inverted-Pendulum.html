@@ -17,18 +17,70 @@
 .schematic-stage .stage-bottom{bottom:8px;color:#777;font-size:8px}
 .schematic-stage .stage-bottom .orange{background:#111}
 @media(max-width:520px){.schematic-stage{height:355px}.schematic-stage .stage-bottom{left:15px;right:15px;font-size:7px}}
+
+/* Phone-first controls: motion stays next to the experiment; tuning lives in Settings. */
+.header-link{border:0;background:none;cursor:pointer;padding:12px 0}
+.phone-panel{display:grid;grid-template-columns:1fr auto;gap:14px 28px;padding:22px 25px;margin-bottom:20px}
+.phone-intro .panel-label{color:var(--orange);font-size:8px;margin-bottom:9px}
+.phone-intro h2{font-size:23px}
+.phone-intro p{font-size:12px;color:#7d8774;line-height:1.65;max-width:520px;margin:8px 0 0}
+.phone-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px;align-content:center;min-width:310px}
+.phone-actions .primary{margin:0;min-height:44px;padding:10px 16px}
+.secondary{background:#fffefa;border:1px solid #dce1d1;border-radius:5px;font-size:11px;min-height:44px;padding:10px 14px}
+button:disabled{opacity:.45;cursor:default}
+.mode-actions{display:flex;justify-content:center;gap:20px;grid-column:1/-1}
+.mode-actions button{background:none;border:0;border-bottom:1px solid transparent;font-size:10px;color:#859079;padding:7px 2px;min-height:36px}
+.mode-actions button[aria-pressed=true]{color:#303d28;border-bottom-color:#8d9c7c}
+.motion-status{grid-column:1/-1;font-size:11px;color:#7d8971;line-height:1.7;border-top:1px solid var(--line);padding-top:11px}
+.motion-status[data-state=error]{color:#ae653b}
+.motion-status[data-state=active]{color:#537447}
+.phone-readings{grid-column:1/-1;display:flex;align-items:center;gap:25px;font:8px var(--mono);letter-spacing:.5px;color:#8c977f}
+.phone-readings strong{font:12px var(--mono);font-weight:400;color:#46563b;margin-left:6px}
+.phone-readings>span:last-child{margin-left:auto;background:#edf1e7;border-radius:4px;padding:6px 8px;font-size:8px;color:#6b7e5c}
+.touch-controls{grid-column:1/-1;border-top:1px solid var(--line);padding-top:13px}
+.touch-controls[hidden]{display:none}
+.touch-controls>label{display:flex;justify-content:space-between;font-size:11px;color:#66765a}
+.touch-controls>label>span{font-size:10px;color:#939e86}
+.touch-controls input{margin:15px 0 11px}
+.touch-controls .range-labels{align-items:center}
+#center-cart{border:1px solid #dfe4d5;background:#f5f7f0;padding:7px 15px;min-height:36px;border-radius:5px;font-size:10px;color:#657359}
+.settings-drawer{align-self:start;scroll-margin-top:16px;background:transparent}
+.settings-drawer>summary{display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:7px;cursor:pointer;padding:20px;font-family:'Space Grotesk',sans-serif;font-size:18px;list-style:none;background:var(--paper)}
+.settings-drawer>summary::-webkit-details-marker{display:none}
+.settings-drawer>summary:after{content:'+';font-size:22px;line-height:1;color:#8d9a80}
+.settings-drawer[open]>summary:after{content:'−'}
+.settings-drawer>summary>span{font:8px var(--mono);color:#8a967d;flex-basis:100%;order:1}
+.settings-drawer[open]>summary{border-bottom:1px solid var(--line)}
+.settings-drawer .controls{padding:12px;background:#f1f3eb;gap:12px}
+.settings-drawer .panel{border-radius:6px}
+.tilt-settings{padding:20px}
+.tilt-settings h2{font-size:17px;margin-bottom:17px}
+.tilt-settings>label{display:flex;justify-content:space-between;font-size:11px;color:#7a876c}
+.tilt-settings>label>strong{font:12px var(--mono);color:#5b704b}
+.tilt-settings p{font-size:10px;line-height:1.8;color:#8b967f;margin-bottom:0}
+@media(max-width:800px){.phone-panel{gap:12px 16px;padding:20px}.phone-intro h2{font-size:21px}.phone-intro p{font-size:11px}.phone-actions{min-width:260px}.settings-drawer .controls{grid-template-columns:1fr 1fr}.settings-drawer .tilt-settings{grid-column:1/-1}.intro{padding:25px 0}.phone-panel{margin-bottom:15px}}
+@media(max-width:580px){.phone-panel{grid-template-columns:1fr;padding:17px 16px;gap:12px}.phone-intro .panel-label{font-size:7px;margin-bottom:7px}.phone-intro h2{font-size:21px}.phone-intro p{font-size:11px;margin-top:6px;line-height:1.6}.phone-actions{min-width:0}.phone-actions .primary,.secondary{font-size:11px}.phone-readings{gap:12px;font-size:7px;letter-spacing:0}.phone-readings strong{font-size:11px;margin-left:4px}.phone-readings>span:last-child{font-size:7px;padding:5px}.motion-status{font-size:10px}.mode-actions{gap:28px}.mode-actions button{min-height:38px}.settings-drawer .controls{grid-template-columns:1fr}.settings-drawer>summary{padding:17px}.intro{padding:22px 0 20px}.intro h1{font-size:32px}.intro p{font-size:11px;max-width:100%}.site-header{height:62px}.schematic-stage{height:330px}.gain-row input{min-height:38px;font-size:16px}.switch{width:38px;height:23px}.switch>span:before{width:19px;height:19px}.switch input:checked+span:before{transform:translateX(15px)}.motion-row{min-height:45px}.arrow-controls button{min-height:44px}.control-tip{font-size:9px}.restore-button{min-height:40px;font-size:11px}.phone-readings>span{white-space:nowrap}.header-link{font-size:12px}}
+
+@media(max-width:580px){.tilt-active .intro,.tilt-active .phone-intro,.tilt-active .mode-actions{display:none}.tilt-active .phone-panel{padding:12px 16px;margin-top:14px;gap:10px}.tilt-active .motion-status{padding-top:8px}.tilt-active .phone-actions{gap:8px}.tilt-active .schematic-stage{height:320px}}
 </style>
 </head>
 <body>
   <header class="site-header">
     <a class="brand" href="#" aria-label="Control Lab home"><span class="brand-symbol">◒</span> CONTROL<span class="brand-light">LAB</span><span class="brand-period">®</span></a>
     <div class="header-middle"><span class="tiny-square"></span> AN INTERACTIVE PHYSICS PLAYGROUND</div>
-    <a class="header-link" href="#how-it-works">Behind the balance <span>↗</span></a>
+    <button class="header-link" id="open-settings">Settings <span aria-hidden="true">⚙</span></button>
   </header>
   <main>
     <section class="intro">
-      <div><div class="eyebrow"><span>EXPERIMENT 001</span><span class="eyebrow-line"></span> DYNAMICS & CONTROL</div><h1>Inverted pendulum<span>.</span></h1><p>A delicate balance. A little disturbance. A controller that brings it back.</p></div>
+      <div><div class="eyebrow"><span>EXPERIMENT 001</span><span class="eyebrow-line"></span> DYNAMICS & CONTROL</div><h1>Inverted pendulum<span>.</span></h1><p>Tilt your phone. Move the cart. Let the PID keep the balance.</p></div>
       <div class="intro-note"><span class="live-dot"></span> REAL-TIME SIMULATION<span class="intro-note-sub">Nonlinear physics · PID control</span></div>
+    </section>
+    <section class="panel phone-panel" aria-labelledby="phone-title">
+      <div class="phone-intro"><div class="panel-label">PHONE MOTION CONTROL</div><h2 id="phone-title">Your phone is the controller.</h2><p>Hold it comfortably with the screen facing up. Enable tilt, then lean left or right to move the cart.</p></div>
+      <div class="phone-actions"><button class="primary" id="enable-tilt">Enable phone tilt</button><button id="calibrate" class="secondary" disabled>Calibrate neutral</button><div class="mode-actions"><button id="touch-mode" aria-pressed="true">Touch control</button><button id="demo-mode" aria-pressed="false">Watch demo</button></div></div>
+      <div class="motion-status" id="motion-status" role="status" aria-live="polite">Phone tilt is off. Try the touch slider, or enable motion on your phone.</div>
+      <div class="phone-readings"><span>PHONE TILT <strong id="phone-angle">—</strong></span><span>CART TARGET <strong id="target-position">0.00 m</strong></span><span id="input-mode">TOUCH CONTROL</span></div>
+      <div id="touch-controls" class="touch-controls"><label for="touch-position">Move the cart <span>left ← → right</span></label><input type="range" id="touch-position" min="-1.6" max="1.6" step="0.05" value="0" aria-label="Cart target position in meters"><div class="range-labels"><span>−1.6 m</span><button id="center-cart">Center cart</button><span>+1.6 m</span></div></div>
     </section>
     <div class="workspace">
       <section class="simulation-panel panel" aria-label="Interactive pendulum simulation">
@@ -37,13 +89,17 @@
         <div class="transport"><div class="transport-left"><button class="play-button" id="play" aria-label="Pause simulation">Ⅱ</button><button class="reset-button" id="reset" title="Reset simulation (R)">↺ <span>Reset</span></button><span class="transport-divider"></span><span class="speed-label">SIMULATION SPEED</span><div class="segmented" aria-label="Simulation speed"><button data-speed="0.5">0.5×</button><button data-speed="1" class="selected">1×</button><button data-speed="2">2×</button></div></div><span class="keyboard-hint"><kbd>space</kbd> to pause</span></div>
         <div class="metrics"><div><span class="metric-label">PENDULUM ANGLE</span><strong id="angle">0.00<span>°</span></strong><small>from the vertical</small></div><div><span class="metric-label">CART POSITION</span><strong id="position">0.00 <span>m</span></strong><small>relative to center</small></div><div><span class="metric-label">CONTROL FORCE</span><strong id="force">0.00 <span>N</span></strong><small>applied by the PID</small></div><div><span class="metric-label">ANGULAR VELOCITY</span><strong id="velocity">0.00 <span>°/s</span></strong><small>pendulum rotation</small></div></div>
       </section>
-      <aside class="controls">
+      <details class="settings-drawer panel" id="settings">
+        <summary>Settings <span>Motion, disturbance & PID</span></summary>
+        <aside class="controls">
+        <section class="panel tilt-settings"><h2>Phone response</h2><label for="tilt-range">Full travel at <strong id="tilt-range-label">25°</strong></label><input id="tilt-range" type="range" min="10" max="45" step="1" value="25"><div class="range-labels"><span>More sensitive</span><span>Less sensitive</span></div><div class="motion-row"><label for="invert-tilt">Reverse tilt direction</label><label class="switch"><input id="invert-tilt" type="checkbox"><span></span></label></div><p>Calibrate after changing your grip. Turning the phone between portrait and landscape recalibrates automatically.</p></section>
         <section class="panel disturbance-panel"><div class="panel-label"><span class="wind-icon">≋</span> MAKE SOME WAVES</div><div class="control-title-row"><h2>Disturbance</h2><span class="small-tag">WIND FORCE</span></div><p>Put the balance to the test. Turn up the wind and watch the controller respond.</p><div class="disturbance-reading"><strong id="disturbance-value">0</strong><span>N</span><span class="disturbance-level" id="disturbance-level">All calm</span></div><input id="disturbance" type="range" min="0" max="30" step="1" value="0" aria-label="Disturbance amplitude in newtons"><div class="range-labels"><span>0 N</span><span>30 N</span></div><div class="arrow-controls"><button id="decrease" aria-label="Decrease disturbance"><span>↓</span> Less wind</button><button id="increase" aria-label="Increase disturbance"><span>↑</span> More wind</button></div><div class="control-tip"><span>↳</span> Use your <kbd>↑</kbd> <kbd>↓</kbd> arrow keys. Try holding them.</div></section>
-        <section class="panel pid-panel"><div class="control-title-row"><h2>In good hands.</h2><label class="switch"><input type="checkbox" id="pid-enabled" checked aria-label="Enable PID controller"><span></span></label></div><div class="pid-description"><span class="live-dot" id="pid-dot"></span><span id="pid-state">PID controller active</span></div><div class="gain-row"><label for="kp"><span class="gain-letter">P</span> Proportional</label><input type="number" id="kp" min="0" max="300" step="1" value="100" aria-label="Proportional gain"></div><div class="gain-row"><label for="ki"><span class="gain-letter">I</span> Integral</label><input type="number" id="ki" min="0" max="100" step="1" value="8" aria-label="Integral gain"></div><div class="gain-row"><label for="kd"><span class="gain-letter">D</span> Derivative</label><input type="number" id="kd" min="0" max="100" step="1" value="22" aria-label="Derivative gain"></div><div class="motion-row"><label for="motion">Side-to-side motion</label><label class="switch"><input type="checkbox" id="motion" checked><span></span></label></div><button class="restore-button" id="restore">↺ Restore default gains</button></section>
-      </aside>
+        <section class="panel pid-panel"><div class="control-title-row"><h2>In good hands.</h2><label class="switch"><input type="checkbox" id="pid-enabled" checked aria-label="Enable PID controller"><span></span></label></div><div class="pid-description"><span class="live-dot" id="pid-dot"></span><span id="pid-state">PID controller active</span></div><div class="gain-row"><label for="kp"><span class="gain-letter">P</span> Proportional</label><input type="number" id="kp" min="0" max="300" step="1" value="100" aria-label="Proportional gain"></div><div class="gain-row"><label for="ki"><span class="gain-letter">I</span> Integral</label><input type="number" id="ki" min="0" max="100" step="1" value="8" aria-label="Integral gain"></div><div class="gain-row"><label for="kd"><span class="gain-letter">D</span> Derivative</label><input type="number" id="kd" min="0" max="100" step="1" value="22" aria-label="Derivative gain"></div><div class="motion-row"><label for="motion">Auto motion in demo</label><label class="switch"><input type="checkbox" id="motion" checked><span></span></label></div><button class="restore-button" id="restore">↺ Restore default gains</button></section>
+        </aside>
+      </details>
     </div>
     <section class="telemetry"><div class="section-heading"><div class="panel-label"><span class="crosshair">⌁</span> THE RESPONSE, IN REAL TIME</div><span>LAST 20 SECONDS <span class="live-dot"></span></span></div><div class="charts"><article class="panel chart-card"><div class="chart-heading"><h3><i class="legend orange"></i> Pendulum angle</h3><span>degrees</span></div><canvas id="angle-chart" aria-label="Pendulum angle over the last 20 seconds"></canvas><div class="chart-footer"><span>−20 s</span><span>NOW</span></div></article><article class="panel chart-card"><div class="chart-heading"><h3><i class="legend dark"></i> Cart position</h3><span>meters <i class="legend dashed"></i> target</span></div><canvas id="position-chart" aria-label="Cart and target position over the last 20 seconds"></canvas><div class="chart-footer"><span>−20 s</span><span>NOW</span></div></article><article class="panel chart-card"><div class="chart-heading"><h3><i class="legend green"></i> Control force</h3><span>newtons</span></div><canvas id="force-chart" aria-label="PID control force over the last 20 seconds"></canvas><div class="chart-footer"><span>−20 s</span><span>NOW</span></div></article></div></section>
-    <section class="explainer" id="how-it-works"><span class="explain-icon">i</span><div><h3>Unstable by nature. Balanced by feedback.</h3><p>The cart moves beneath the pendulum to keep it upright. A position loop follows the moving target; an angle PID continually corrects the lean. Wind adds a varying external force to the cart. Turn the controller off to see why feedback matters.</p></div><div class="physics-specs"><span>CART <b>1.0 kg</b></span><span>BOB <b>0.22 kg</b></span><span>ROD <b>1.0 m</b></span><span>GRAVITY <b>9.81 m/s²</b></span></div></section>
+    <section class="explainer" id="how-it-works"><span class="explain-icon">i</span><div><h3>Unstable by nature. Balanced by feedback.</h3><p>The cart moves beneath the pendulum to keep it upright. Phone tilt or the touch slider sets the target; a smooth position loop follows it, and an angle PID continually corrects the lean. Wind in Settings adds an independent disturbance. Motion is processed on your device and is never sent to a server. Turn the controller off to see why feedback matters.</p></div><div class="physics-specs"><span>CART <b>1.0 kg</b></span><span>BOB <b>0.22 kg</b></span><span>ROD <b>1.0 m</b></span><span>GRAVITY <b>9.81 m/s²</b></span></div></section>
     <footer><span>CONTROL LAB <span class="footer-slash">/</span> A small experiment in staying upright.</span><span>BUILT TO BE PLAYED WITH. <span>↗</span></span></footer>
   </main>
   <script type="module">const clamp = (x, lo, hi) => Math.max(lo, Math.min(hi, x));
@@ -57,13 +113,18 @@ class Simulation {
     this.disturbance = 0;
     this.controller = true;
     this.motion = true;
+    this.manual = false;
+    this.manualTarget = 0;
     this.reset();
   }
 
   reset() {
     this.t = 0;
     this.x = 0;
-    this.v = this.motion ? 1.2 * 0.34 : 0;
+    this.v = !this.manual && this.motion ? 1.2 * 0.34 : 0;
+    this.commandPosition = 0;
+    this.commandVelocity = 0;
+    this.commandAcceleration = 0;
     this.theta = 0;
     this.omega = 0;
     this.angleIntegral = 0;
@@ -74,14 +135,33 @@ class Simulation {
     this.peak = 0;
   }
 
-  get target() { return this.motion ? 1.2 * Math.sin(this.t * 0.34) : 0; }
-  get targetVelocity() { return this.motion ? 1.2 * 0.34 * Math.cos(this.t * 0.34) : 0; }
+  enterManual() {
+    this.manual = true;
+    this.manualTarget = this.x;
+    this.commandPosition = this.x;
+    this.commandVelocity = this.v;
+    this.commandAcceleration = 0;
+    this.positionIntegral = 0;
+  }
+
+  get target() { return this.manual ? this.commandPosition : this.motion ? 1.2 * Math.sin(this.t * 0.34) : 0; }
+  get targetVelocity() { return this.manual ? this.commandVelocity : this.motion ? 1.2 * 0.34 * Math.cos(this.t * 0.34) : 0; }
+  get targetAcceleration() { return this.manual ? this.commandAcceleration : this.motion ? -1.2 * 0.34 ** 2 * Math.sin(this.t * 0.34) : 0; }
 
   step(dt) {
     if (this.fallen) return;
     this.t += dt;
+    if (this.manual) {
+      // Rate- and acceleration-limited target: rapid phone movements never teleport the cart.
+      const destination = clamp(this.manualTarget, -1.6, 1.6);
+      const wantedVelocity = clamp((destination - this.commandPosition) * 1.5, -0.65, 0.65);
+      const previousVelocity = this.commandVelocity;
+      this.commandVelocity += clamp(wantedVelocity - previousVelocity, -0.6 * dt, 0.6 * dt);
+      this.commandPosition += this.commandVelocity * dt;
+      this.commandAcceleration = (this.commandVelocity - previousVelocity) / dt;
+    }
     this.positionIntegral = clamp(this.positionIntegral + (this.target - this.x) * dt, -2, 2);
-    const feedforward = this.motion ? -1.2 * 0.34 ** 2 * Math.sin(this.t * 0.34) / 9.81 : 0;
+    const feedforward = this.targetAcceleration / 9.81;
     const desiredAngle = clamp(feedforward + 0.11 * (this.target - this.x) + 0.14 * (this.targetVelocity - this.v) + 0.008 * this.positionIntegral, -0.25, 0.25);
     const error = this.theta - desiredAngle;
     // Conditional integration prevents integral windup when the actuator saturates.
@@ -110,8 +190,138 @@ class Simulation {
   }
 }
 
+const limit = (value, lo, hi) => Math.max(lo, Math.min(hi, value));
+const radians = Math.PI / 180;
+
+// Project the gravity vector onto the current screen's horizontal axis.
+// This handles portrait and both landscape orientations without using compass data.
+function screenRoll(beta, gamma, screenAngle = 0) {
+  if (![beta, gamma, screenAngle].every(Number.isFinite)) return null;
+  const b = beta * radians, g = gamma * radians, a = screenAngle * radians;
+  const horizontal = Math.cos(b) * Math.sin(g) * Math.cos(a) + Math.sin(b) * Math.sin(a);
+  const normal = Math.cos(b) * Math.cos(g);
+  if (Math.hypot(horizontal, normal) < 0.08) return null; // Phone nearly edge-on to gravity.
+  return Math.atan2(horizontal, normal) / radians;
+}
+
+function tiltTarget(angle, fullTilt = 25, invert = false) {
+  const magnitude = Math.max(0, Math.abs(angle) - 1.5); // Small dead zone for hand tremor.
+  const normalized = limit(magnitude / (fullTilt - 1.5), 0, 1);
+  return Math.sign(angle) * normalized * 1.6 * (invert ? -1 : 1);
+}
+
+class PhoneTilt {
+  constructor({ onAngle, onState }) {
+    this.onAngle = onAngle;
+    this.onState = onState;
+    this.running = false;
+    this.pending = false;
+    this.session = 0;
+    this.neutral = null;
+    this.latest = null;
+    this.filtered = 0;
+    this.lastReading = 0;
+    this.handle = event => this.read(event);
+  }
+
+  async start() {
+    if (this.pending || this.running) return;
+    const Type = window.DeviceOrientationEvent;
+    if (!window.isSecureContext || location.protocol === 'file:') {
+      this.onState('error', 'Open the HTTPS website on your phone to use motion. The touch slider works here.');
+      return;
+    }
+    if (!Type) {
+      this.onState('error', 'This browser has no motion sensor access. Try Safari on iPhone or Chrome on Android, or use touch.');
+      return;
+    }
+    this.pending = true;
+    const session = ++this.session;
+    this.onState('requesting', 'Allow motion access when your phone asks.');
+    try {
+      // Must be called directly from the user's tap on iOS, before any other await.
+      const permission = typeof Type.requestPermission === 'function' ? await Type.requestPermission() : 'granted';
+      if (session !== this.session) return;
+      this.pending = false;
+      if (permission !== 'granted') {
+        this.onState('error', 'Motion permission was denied. Allow motion in your browser settings, reload, and try again. Touch control is available.');
+        return;
+      }
+      this.running = true;
+      this.neutral = null;
+      this.latest = null;
+      this.filtered = 0;
+      this.lastReading = 0;
+      this.started = performance.now();
+      this.screenAngle = this.orientation();
+      window.addEventListener('deviceorientation', this.handle);
+      this.onState('waiting', 'Hold your phone comfortably, screen facing up. Waiting for a motion reading…');
+      this.watchdog = setInterval(() => {
+        const now = performance.now();
+        if (!this.lastReading && now - this.started > 5000) {
+          this.stop('error', 'No motion readings arrived. Open this link directly in Safari or Chrome, check motion permissions, or use touch.');
+        } else if (this.lastReading && !document.hidden && now - this.lastReading > 3000) {
+          this.stop('error', 'Motion readings stopped. The cart is holding its position. Tap Enable phone tilt to reconnect.');
+        }
+      }, 500);
+    } catch {
+      if (session !== this.session) return;
+      this.pending = false;
+      this.onState('error', 'The browser could not enable motion. Open the HTTPS link directly in Safari or Chrome, or use touch control.');
+    }
+  }
+
+  orientation() { return window.screen.orientation?.angle ?? window.orientation ?? 0; }
+
+  read(event) {
+    if (!this.running || document.hidden) return;
+    const screenAngle = this.orientation();
+    const raw = screenRoll(event.beta, event.gamma, screenAngle);
+    if (raw === null) return;
+    const now = performance.now();
+    if (screenAngle !== this.screenAngle) {
+      this.screenAngle = screenAngle;
+      this.neutral = null;
+    }
+    this.latest = raw;
+    if (this.neutral === null) {
+      this.neutral = raw;
+      this.filtered = 0;
+      this.onState('active', 'Tilt left to go left, right to go right. Your current hold is the neutral position.');
+    }
+    const difference = ((raw - this.neutral + 540) % 360) - 180;
+    const elapsed = this.lastReading ? limit((now - this.lastReading) / 1000, 0.001, 0.1) : 0.016;
+    this.filtered += (limit(difference, -60, 60) - this.filtered) * (1 - Math.exp(-elapsed / 0.12));
+    this.lastReading = now;
+    this.onAngle(this.filtered);
+  }
+
+  calibrate() {
+    if (!this.running || this.latest === null) return;
+    this.neutral = this.latest;
+    this.filtered = 0;
+    this.onAngle(0);
+    this.onState('active', 'Neutral calibrated. Keep this comfortable hold, then tilt gently left or right.');
+  }
+
+  stop(state = 'off', message = 'Phone tilt is off. Move the touch slider, or enable tilt again.') {
+    ++this.session;
+    this.pending = false;
+    this.running = false;
+    this.latest = null;
+    this.neutral = null;
+    clearInterval(this.watchdog);
+    window.removeEventListener('deviceorientation', this.handle);
+    this.onState(state, message);
+  }
+}
+
+
 const $ = id => document.getElementById(id);
 const sim = new Simulation();
+sim.manual = true;
+sim.reset();
+let controlMode = 'touch', phoneAngle = 0;
 let paused = false, speed = 1, history = [], accumulator = 0, lastSample = -1;
 const dt = 1 / 240;
 const stage = $('simulation');
@@ -307,6 +517,8 @@ function updateReadings() {
   status.innerHTML = `<span></span> ${state}`;
   status.className = `status${sim.fallen ? ' danger' : Math.abs(degrees) > 4 || !sim.controller ? ' warning' : ''}`;
   $('fallen-overlay').hidden = !sim.fallen;
+  $('phone-angle').textContent = controlMode === 'tilt' ? `${format(phoneAngle, 1)}°` : '—';
+  $('target-position').textContent = `${format(sim.manual ? sim.manualTarget : sim.target)} m`;
 }
 
 function setDisturbance(value) {
@@ -361,12 +573,95 @@ $('motion').addEventListener('change', e => { sim.motion = e.target.checked; sim
 document.addEventListener('keydown', e => {
   // Leave native keyboard controls intact while editing form inputs.
   if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target.isContentEditable) return;
-  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    selectMode('touch');
+    setCartTarget(sim.manualTarget + (e.key === 'ArrowRight' ? 0.15 : -0.15));
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
     e.preventDefault(); setDisturbance(sim.disturbance + (e.key === 'ArrowUp' ? 1 : -1));
   } else if (e.code === 'Space' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
     e.preventDefault(); if (!e.repeat) setPaused(!paused);
   } else if (e.key.toLowerCase() === 'r' && !e.repeat && !e.metaKey && !e.ctrlKey && !e.altKey) reset();
 });
+
+function refreshMode() {
+  document.body.classList.toggle('tilt-active', controlMode === 'tilt');
+  $('touch-controls').hidden = controlMode !== 'touch';
+  $('input-mode').textContent = controlMode === 'tilt' ? 'PHONE TILT' : controlMode === 'demo' ? 'AUTO DEMO' : 'TOUCH CONTROL';
+  $('touch-mode').setAttribute('aria-pressed', String(controlMode === 'touch'));
+  $('demo-mode').setAttribute('aria-pressed', String(controlMode === 'demo'));
+}
+
+function setCartTarget(value) {
+  sim.manualTarget = clamp(Number(value), -1.6, 1.6);
+  $('touch-position').value = sim.manualTarget;
+}
+
+function selectMode(mode) {
+  if (mode === controlMode) return;
+  if (phone.running || phone.pending) phone.stop();
+  controlMode = mode;
+  phoneAngle = 0;
+  if (mode === 'demo') {
+    sim.manual = false;
+    reset();
+  } else {
+    sim.enterManual();
+    setCartTarget(sim.x);
+  }
+  refreshMode();
+}
+
+const phone = new PhoneTilt({
+  onAngle(angle) {
+    phoneAngle = angle;
+    if (controlMode === 'tilt') setCartTarget(tiltTarget(angle, Number($('tilt-range').value), $('invert-tilt').checked));
+  },
+  onState(state, message) {
+    $('motion-status').textContent = message;
+    $('motion-status').dataset.state = state;
+    $('enable-tilt').textContent = state === 'requesting' ? 'Waiting for permission…' : state === 'waiting' || state === 'active' ? 'Stop phone tilt' : 'Enable phone tilt';
+    $('enable-tilt').disabled = state === 'requesting';
+    $('calibrate').disabled = state !== 'active';
+    if (state === 'waiting') {
+      controlMode = 'tilt';
+      sim.enterManual();
+      setCartTarget(sim.x);
+      phoneAngle = 0;
+    } else if ((state === 'off' || state === 'error') && controlMode === 'tilt') {
+      controlMode = 'touch';
+      setCartTarget(sim.x);
+      phoneAngle = 0;
+    }
+    refreshMode();
+  }
+});
+
+$('enable-tilt').addEventListener('click', () => phone.running ? phone.stop() : phone.start());
+$('calibrate').addEventListener('click', () => phone.calibrate());
+$('touch-mode').addEventListener('click', () => selectMode('touch'));
+$('demo-mode').addEventListener('click', () => selectMode('demo'));
+$('touch-position').addEventListener('input', e => setCartTarget(e.target.value));
+$('center-cart').addEventListener('click', () => setCartTarget(0));
+function updateSensitivity() {
+  $('tilt-range-label').textContent = `${$('tilt-range').value}°`;
+  if (controlMode === 'tilt') setCartTarget(tiltTarget(phoneAngle, Number($('tilt-range').value), $('invert-tilt').checked));
+}
+$('tilt-range').addEventListener('input', updateSensitivity);
+$('invert-tilt').addEventListener('change', updateSensitivity);
+$('open-settings').addEventListener('click', () => {
+  $('settings').open = true;
+  $('settings').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+document.addEventListener('visibilitychange', () => {
+  // A hidden page must not accumulate physics time or keep steering on old readings.
+  if (document.hidden) {
+    setPaused(true);
+    if (phone.running || phone.pending) phone.stop('off', 'Motion paused while you were away. Resume the simulation and enable tilt again.');
+  }
+});
+window.addEventListener('pagehide', () => phone.stop());
+refreshMode();
 
 let previous = performance.now(), lastUI = 0;
 function animate(now) {

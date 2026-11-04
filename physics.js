@@ -9,13 +9,18 @@ export class Simulation {
     this.disturbance = 0;
     this.controller = true;
     this.motion = true;
+    this.manual = false;
+    this.manualTarget = 0;
     this.reset();
   }
 
   reset() {
     this.t = 0;
     this.x = 0;
-    this.v = this.motion ? 1.2 * 0.34 : 0;
+    this.v = !this.manual && this.motion ? 1.2 * 0.34 : 0;
+    this.commandPosition = 0;
+    this.commandVelocity = 0;
+    this.commandAcceleration = 0;
     this.theta = 0;
     this.omega = 0;
     this.angleIntegral = 0;
@@ -26,14 +31,33 @@ export class Simulation {
     this.peak = 0;
   }
 
-  get target() { return this.motion ? 1.2 * Math.sin(this.t * 0.34) : 0; }
-  get targetVelocity() { return this.motion ? 1.2 * 0.34 * Math.cos(this.t * 0.34) : 0; }
+  enterManual() {
+    this.manual = true;
+    this.manualTarget = this.x;
+    this.commandPosition = this.x;
+    this.commandVelocity = this.v;
+    this.commandAcceleration = 0;
+    this.positionIntegral = 0;
+  }
+
+  get target() { return this.manual ? this.commandPosition : this.motion ? 1.2 * Math.sin(this.t * 0.34) : 0; }
+  get targetVelocity() { return this.manual ? this.commandVelocity : this.motion ? 1.2 * 0.34 * Math.cos(this.t * 0.34) : 0; }
+  get targetAcceleration() { return this.manual ? this.commandAcceleration : this.motion ? -1.2 * 0.34 ** 2 * Math.sin(this.t * 0.34) : 0; }
 
   step(dt) {
     if (this.fallen) return;
     this.t += dt;
+    if (this.manual) {
+      // Rate- and acceleration-limited target: rapid phone movements never teleport the cart.
+      const destination = clamp(this.manualTarget, -1.6, 1.6);
+      const wantedVelocity = clamp((destination - this.commandPosition) * 1.5, -0.65, 0.65);
+      const previousVelocity = this.commandVelocity;
+      this.commandVelocity += clamp(wantedVelocity - previousVelocity, -0.6 * dt, 0.6 * dt);
+      this.commandPosition += this.commandVelocity * dt;
+      this.commandAcceleration = (this.commandVelocity - previousVelocity) / dt;
+    }
     this.positionIntegral = clamp(this.positionIntegral + (this.target - this.x) * dt, -2, 2);
-    const feedforward = this.motion ? -1.2 * 0.34 ** 2 * Math.sin(this.t * 0.34) / 9.81 : 0;
+    const feedforward = this.targetAcceleration / 9.81;
     const desiredAngle = clamp(feedforward + 0.11 * (this.target - this.x) + 0.14 * (this.targetVelocity - this.v) + 0.008 * this.positionIntegral, -0.25, 0.25);
     const error = this.theta - desiredAngle;
     // Conditional integration prevents integral windup when the actuator saturates.

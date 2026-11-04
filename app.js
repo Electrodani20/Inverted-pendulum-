@@ -1,7 +1,11 @@
 import { Simulation, clamp } from './physics.js';
+import { PhoneTilt, tiltTarget } from './motion.js';
 
 const $ = id => document.getElementById(id);
 const sim = new Simulation();
+sim.manual = true;
+sim.reset();
+let controlMode = 'touch', phoneAngle = 0;
 let paused = false, speed = 1, history = [], accumulator = 0, lastSample = -1;
 const dt = 1 / 240;
 const stage = $('simulation');
@@ -197,6 +201,8 @@ function updateReadings() {
   status.innerHTML = `<span></span> ${state}`;
   status.className = `status${sim.fallen ? ' danger' : Math.abs(degrees) > 4 || !sim.controller ? ' warning' : ''}`;
   $('fallen-overlay').hidden = !sim.fallen;
+  $('phone-angle').textContent = controlMode === 'tilt' ? `${format(phoneAngle, 1)}°` : '—';
+  $('target-position').textContent = `${format(sim.manual ? sim.manualTarget : sim.target)} m`;
 }
 
 function setDisturbance(value) {
@@ -251,12 +257,95 @@ $('motion').addEventListener('change', e => { sim.motion = e.target.checked; sim
 document.addEventListener('keydown', e => {
   // Leave native keyboard controls intact while editing form inputs.
   if (e.target instanceof HTMLInputElement || e.target instanceof HTMLTextAreaElement || e.target.isContentEditable) return;
-  if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
+  if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') {
+    e.preventDefault();
+    selectMode('touch');
+    setCartTarget(sim.manualTarget + (e.key === 'ArrowRight' ? 0.15 : -0.15));
+  } else if (e.key === 'ArrowUp' || e.key === 'ArrowDown') {
     e.preventDefault(); setDisturbance(sim.disturbance + (e.key === 'ArrowUp' ? 1 : -1));
   } else if (e.code === 'Space' && e.target.tagName !== 'BUTTON' && e.target.tagName !== 'A') {
     e.preventDefault(); if (!e.repeat) setPaused(!paused);
   } else if (e.key.toLowerCase() === 'r' && !e.repeat && !e.metaKey && !e.ctrlKey && !e.altKey) reset();
 });
+
+function refreshMode() {
+  document.body.classList.toggle('tilt-active', controlMode === 'tilt');
+  $('touch-controls').hidden = controlMode !== 'touch';
+  $('input-mode').textContent = controlMode === 'tilt' ? 'PHONE TILT' : controlMode === 'demo' ? 'AUTO DEMO' : 'TOUCH CONTROL';
+  $('touch-mode').setAttribute('aria-pressed', String(controlMode === 'touch'));
+  $('demo-mode').setAttribute('aria-pressed', String(controlMode === 'demo'));
+}
+
+function setCartTarget(value) {
+  sim.manualTarget = clamp(Number(value), -1.6, 1.6);
+  $('touch-position').value = sim.manualTarget;
+}
+
+function selectMode(mode) {
+  if (mode === controlMode) return;
+  if (phone.running || phone.pending) phone.stop();
+  controlMode = mode;
+  phoneAngle = 0;
+  if (mode === 'demo') {
+    sim.manual = false;
+    reset();
+  } else {
+    sim.enterManual();
+    setCartTarget(sim.x);
+  }
+  refreshMode();
+}
+
+const phone = new PhoneTilt({
+  onAngle(angle) {
+    phoneAngle = angle;
+    if (controlMode === 'tilt') setCartTarget(tiltTarget(angle, Number($('tilt-range').value), $('invert-tilt').checked));
+  },
+  onState(state, message) {
+    $('motion-status').textContent = message;
+    $('motion-status').dataset.state = state;
+    $('enable-tilt').textContent = state === 'requesting' ? 'Waiting for permission…' : state === 'waiting' || state === 'active' ? 'Stop phone tilt' : 'Enable phone tilt';
+    $('enable-tilt').disabled = state === 'requesting';
+    $('calibrate').disabled = state !== 'active';
+    if (state === 'waiting') {
+      controlMode = 'tilt';
+      sim.enterManual();
+      setCartTarget(sim.x);
+      phoneAngle = 0;
+    } else if ((state === 'off' || state === 'error') && controlMode === 'tilt') {
+      controlMode = 'touch';
+      setCartTarget(sim.x);
+      phoneAngle = 0;
+    }
+    refreshMode();
+  }
+});
+
+$('enable-tilt').addEventListener('click', () => phone.running ? phone.stop() : phone.start());
+$('calibrate').addEventListener('click', () => phone.calibrate());
+$('touch-mode').addEventListener('click', () => selectMode('touch'));
+$('demo-mode').addEventListener('click', () => selectMode('demo'));
+$('touch-position').addEventListener('input', e => setCartTarget(e.target.value));
+$('center-cart').addEventListener('click', () => setCartTarget(0));
+function updateSensitivity() {
+  $('tilt-range-label').textContent = `${$('tilt-range').value}°`;
+  if (controlMode === 'tilt') setCartTarget(tiltTarget(phoneAngle, Number($('tilt-range').value), $('invert-tilt').checked));
+}
+$('tilt-range').addEventListener('input', updateSensitivity);
+$('invert-tilt').addEventListener('change', updateSensitivity);
+$('open-settings').addEventListener('click', () => {
+  $('settings').open = true;
+  $('settings').scrollIntoView({ behavior: 'smooth', block: 'start' });
+});
+document.addEventListener('visibilitychange', () => {
+  // A hidden page must not accumulate physics time or keep steering on old readings.
+  if (document.hidden) {
+    setPaused(true);
+    if (phone.running || phone.pending) phone.stop('off', 'Motion paused while you were away. Resume the simulation and enable tilt again.');
+  }
+});
+window.addEventListener('pagehide', () => phone.stop());
+refreshMode();
 
 let previous = performance.now(), lastUI = 0;
 function animate(now) {
